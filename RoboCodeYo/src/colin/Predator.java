@@ -78,6 +78,6 @@ public class Predator extends AdvancedRobot {
 	public void onHitByBullet(HitByBulletEvent e) {
 		turnGunRight(e.getBearing());
 
-		fire(2);
+		setFire(2);
 	}
 }
