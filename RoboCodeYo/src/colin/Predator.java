@@ -1,6 +1,7 @@
 package colin;
 
 import robocode.AdvancedRobot;
+import robocode.ScannedRobotEvent;
 import robocode.util.Utils;
 import robocode.*;
 
@@ -22,10 +23,15 @@ public class Predator extends AdvancedRobot {
 		setColors(Color.yellow, Color.red, Color.black);
 
 		while (true) {
-
-			turnRadarRight(45);
-			ahead(75);
-			turnRight(90);
+			double distance = Math.random() * 300;
+			double angle = Math.random() * 45;
+			turnRight(angle);
+			ahead(distance);
+			ahead(100);
+			turnGunRight(90);
+			back(100);
+			turnGunRight(90);
+			turnRadarRight(360);
 		}
 	}
 
@@ -55,7 +61,17 @@ public class Predator extends AdvancedRobot {
 			double absoluteBearing = getHeading() + e.getBearing();
 			turnGunRight(Math.toDegrees(Utils.normalRelativeAngle(Math
 					.toRadians(absoluteBearing - getGunHeading()))));
-			fire(1);
+
+			double distance = e.getDistance();
+			if (distance < 200) {
+				setFire(3.5);
+			} else if (distance < 500) {
+				setFire(2.5);
+			} else if (distance < 800) {
+				setFire(1.5);
+			} else {
+				setFire(0.5);
+			}
 		}
 	}
 
